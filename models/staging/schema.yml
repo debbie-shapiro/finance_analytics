@@ -1,0 +1,123 @@
+version: 2
+
+models:
+  - name: stg_transactions
+    description: >
+      Cleaned and type-cast financial transactions from YNAB budget exports.
+      Adds derived fields for flow direction and date parts.
+    columns:
+      - name: transaction_id
+        description: Unique transaction identifier
+        data_tests:
+          - unique
+          - not_null
+      - name: account_id
+        description: Foreign key to accounts
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_accounts')
+                field: account_id
+      - name: transaction_date
+        description: Date the transaction occurred
+        data_tests:
+          - not_null
+      - name: amount
+        description: Transaction amount (positive = inflow, negative = outflow)
+        data_tests:
+          - not_null
+      - name: flow_direction
+        description: Derived inflow/outflow classification
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['inflow', 'outflow']
+      - name: category_group
+        description: Top-level budget category (e.g., Income, Housing, Essentials)
+      - name: category
+        description: Specific budget category (e.g., Salary, Mortgage, Groceries)
+      - name: source_system
+        description: Originating system for this transaction
+        data_tests:
+          - not_null
+
+  - name: stg_accounts
+    description: >
+      Cleaned account master data. Normalizes account types to lowercase.
+    columns:
+      - name: account_id
+        description: Unique account identifier
+        data_tests:
+          - unique
+          - not_null
+      - name: account_type
+        description: Type of financial account
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['checking', 'credit_card', 'brokerage', 'retirement']
+      - name: is_active
+        description: Whether the account is currently active
+        data_tests:
+          - not_null
+
+  - name: stg_holdings
+    description: >
+      Cleaned portfolio holdings from Schwab positions export.
+      Calculates total cost basis, market value, and unrealized gain/loss.
+    columns:
+      - name: holding_id
+        description: Unique holding identifier
+        data_tests:
+          - unique
+          - not_null
+      - name: account_id
+        description: Foreign key to accounts
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_accounts')
+                field: account_id
+      - name: ticker
+        description: Stock/ETF ticker symbol (uppercased)
+        data_tests:
+          - not_null
+      - name: shares
+        description: Number of shares held
+        data_tests:
+          - not_null
+      - name: market_value
+        description: Current market value (shares x current_price)
+        data_tests:
+          - not_null
+
+  - name: stg_properties
+    description: >
+      Cleaned rental property master data with LLC ownership details.
+    columns:
+      - name: property_id
+        description: Unique property identifier
+        data_tests:
+          - unique
+          - not_null
+      - name: property_name
+        description: Friendly property name (Centaur, Minotaur)
+        data_tests:
+          - not_null
+      - name: llc_name
+        description: Owning LLC entity name
+        data_tests:
+          - not_null
+      - name: units
+        description: Number of rental units at this property
+        data_tests:
+          - not_null
+      - name: state
+        description: State where property is located
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['WA']

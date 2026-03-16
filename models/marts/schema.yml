@@ -1,0 +1,108 @@
+version: 2
+
+models:
+  - name: mart_monthly_budget_summary
+    description: >
+      Monthly budget summary aggregating transactions by category.
+      Includes YTD running totals for tracking against budget targets.
+      Primary reporting table for personal finance dashboards.
+    columns:
+      - name: transaction_year
+        description: Calendar year
+        data_tests:
+          - not_null
+      - name: transaction_month
+        description: Calendar month (1-12)
+        data_tests:
+          - not_null
+      - name: category_group
+        description: Top-level budget grouping
+        data_tests:
+          - not_null
+      - name: category
+        description: Specific budget category
+        data_tests:
+          - not_null
+      - name: transaction_count
+        description: Number of transactions in this bucket
+        data_tests:
+          - not_null
+      - name: net_amount
+        description: Net of inflows minus outflows for the month
+      - name: ytd_net_amount
+        description: Year-to-date cumulative net amount
+
+  - name: mart_portfolio_performance
+    description: >
+      Portfolio performance summary with dual granularity --
+      by account and by asset class. Supports investment dashboard
+      and rebalancing analysis.
+    columns:
+      - name: summary_type
+        description: Granularity level (account or asset_class)
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['account', 'asset_class']
+      - name: group_key
+        description: Grouping identifier (account_id or asset class name)
+        data_tests:
+          - not_null
+      - name: total_market_value
+        description: Sum of current market values
+      - name: total_unrealized_gain_loss
+        description: Total unrealized gain or loss
+      - name: return_pct
+        description: Percentage return on cost basis
+
+  - name: mart_rental_property_pnl
+    description: >
+      Monthly P&L by rental property, structured to map directly to
+      IRS Schedule E line items. Includes YTD running totals for each
+      property and LLC.
+    columns:
+      - name: property_id
+        description: Foreign key to properties
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_properties')
+                field: property_id
+      - name: property_name
+        description: Friendly property name
+        data_tests:
+          - not_null
+      - name: llc_name
+        description: Owning LLC entity
+        data_tests:
+          - not_null
+      - name: rental_income
+        description: Schedule E Line 3 - gross rents received
+      - name: mortgage_interest
+        description: Schedule E Line 12 - mortgage interest paid
+      - name: repairs_maintenance
+        description: Schedule E Line 14 - repairs
+      - name: management_fees
+        description: Schedule E Line 18 - other (property management)
+      - name: insurance
+        description: Schedule E Line 9 - insurance
+      - name: net_income_loss
+        description: Schedule E Line 21 - net income or loss
+      - name: ytd_net
+        description: Year-to-date cumulative net income/loss
+
+  - name: mart_income_summary
+    description: Monthly income breakdown by source and tax category.
+    columns:
+      - name: total_income
+        description: Sum of inflows for the month
+        data_tests:
+          - not_null
+      - name: tax_category
+        description: IRS schedule classification
+        data_tests:
+          - not_null
+
+  

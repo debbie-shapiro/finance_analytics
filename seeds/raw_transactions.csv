@@ -1,0 +1,26 @@
+transaction_id,account_id,transaction_date,payee,category_group,category,amount,memo,source_system
+TXN001,CHECKING_01,2025-01-05,Grocery Outlet,Essentials,Groceries,-125.43,,ynab
+TXN002,CHECKING_01,2025-01-08,Comcast,Housing,Internet,-89.99,Monthly internet,ynab
+TXN003,CHECKING_01,2025-01-10,Employer Direct Deposit,Income,Salary,4250.00,Bi-weekly pay,ynab
+TXN004,CREDIT_01,2025-01-12,Amazon,Shopping,General,-67.82,Household supplies,ynab
+TXN005,CHECKING_01,2025-01-15,Mr. Cooper,Housing,Mortgage,-2145.00,Centaur mortgage,ynab
+TXN006,CHECKING_01,2025-01-15,Mr. Cooper,Housing,Mortgage,-1875.00,Minotaur mortgage,ynab
+TXN007,CHECKING_01,2025-01-18,Home Depot,Housing,Repairs,-342.15,Plumbing repair Centaur,ynab
+TXN008,CHECKING_01,2025-01-20,Tenant A,Income,Rental Income,1800.00,Centaur Unit 1 rent,ynab
+TXN009,CHECKING_01,2025-01-20,Tenant B,Income,Rental Income,1650.00,Centaur Unit 2 rent,ynab
+TXN010,CHECKING_01,2025-01-20,Tenant C,Income,Rental Income,1950.00,Minotaur Unit 1 rent,ynab
+TXN011,CHECKING_01,2025-01-22,Safeway,Essentials,Groceries,-98.67,,ynab
+TXN012,CHECKING_01,2025-01-25,Employer Direct Deposit,Income,Salary,4250.00,Bi-weekly pay,ynab
+TXN013,CREDIT_01,2025-01-28,Shell,Transportation,Gas,-52.30,,ynab
+TXN014,CHECKING_01,2025-02-01,State Farm,Housing,Insurance,-185.00,Umbrella insurance,ynab
+TXN015,CHECKING_01,2025-02-05,Grocery Outlet,Essentials,Groceries,-132.18,,ynab
+TXN016,CHECKING_01,2025-02-08,Consulting Client A,Income,Consulting,3500.00,Labyrinth Analytics invoice,ynab
+TXN017,CREDIT_01,2025-02-10,REI,Shopping,General,-89.95,Hiking gear,ynab
+TXN018,CHECKING_01,2025-02-10,Employer Direct Deposit,Income,Salary,4250.00,Bi-weekly pay,ynab
+TXN019,CHECKING_01,2025-02-15,Mr. Cooper,Housing,Mortgage,-2145.00,Centaur mortgage,ynab
+TXN020,CHECKING_01,2025-02-15,Mr. Cooper,Housing,Mortgage,-1875.00,Minotaur mortgage,ynab
+TXN021,CHECKING_01,2025-02-18,Hallmark PM,Housing,Property Management,-450.00,Centaur PM fee,ynab
+TXN022,CHECKING_01,2025-02-20,Tenant A,Income,Rental Income,1800.00,Centaur Unit 1 rent,ynab
+TXN023,CHECKING_01,2025-02-20,Tenant B,Income,Rental Income,1650.00,Centaur Unit 2 rent,ynab
+TXN024,CHECKING_01,2025-02-20,Tenant C,Income,Rental Income,1950.00,Minotaur Unit 1 rent,ynab
+TXN025,CHECKING_01,2025-02-25,Employer Direct Deposit,Income,Salary,4250.00,Bi-weekly pay,ynab

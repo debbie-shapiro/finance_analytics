@@ -1,0 +1,29 @@
+version: 2
+
+sources:
+  - name: ynab
+    description: Financial data from YNAB budget exports
+    schema: main_raw
+    tables:
+      - name: raw_transactions
+        description: All budget transactions across accounts
+        loaded_at_field: "cast(transaction_date as timestamp)"
+        freshness:
+          warn_after: {count: 7, period: day}
+          error_after: {count: 30, period: day}
+      - name: raw_accounts
+        description: Financial account master data
+
+  - name: schwab
+    description: Investment data from Schwab positions export
+    schema: main_raw
+    tables:
+      - name: raw_holdings
+        description: Portfolio positions with cost basis
+
+  - name: rentals
+    description: Rental property reference data
+    schema: main_raw
+    tables:
+      - name: raw_properties
+        description: Property details and LLC ownership

@@ -1,0 +1,7 @@
+account_id,account_name,account_type,institution,is_active
+CHECKING_01,Primary Checking,checking,BECU,true
+CREDIT_01,Visa Rewards,credit_card,Chase,true
+BROKERAGE_01,Individual Brokerage,brokerage,Schwab,true
+ROTH_01,Roth IRA,retirement,Schwab,true
+RENTAL_CENTAUR,Centaur Operating,checking,BECU,true
+RENTAL_MINOTAUR,Minotaur Operating,checking,BECU,true

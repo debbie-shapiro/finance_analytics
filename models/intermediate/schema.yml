@@ -1,0 +1,87 @@
+version: 2
+
+models:
+  - name: int_transactions_classified
+    description: >
+      Transactions enriched with account details and tax classification.
+      Maps each transaction to an IRS schedule category (Schedule C, E, or personal)
+      and attributes rental transactions to specific properties.
+    columns:
+      - name: transaction_id
+        description: Unique transaction identifier
+        data_tests:
+          - unique
+          - not_null
+      - name: tax_category
+        description: >
+          IRS schedule mapping: schedule_c_income, schedule_e_income,
+          schedule_e_expense_centaur, schedule_e_expense_minotaur,
+          schedule_e_expense_shared, w2_income, or personal
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values:
+                - schedule_c_income
+                - schedule_e_income
+                - schedule_e_expense_centaur
+                - schedule_e_expense_minotaur
+                - schedule_e_expense_shared
+                - w2_income
+                - personal
+      - name: account_name
+        description: Friendly account name from accounts master
+      - name: property_id
+        description: Property attribution for rental transactions (null for non-rental)
+
+  - name: int_rental_income_expenses
+    description: >
+      Rental transactions linked to properties with shared expense allocation.
+      Shared expenses (e.g., umbrella insurance) are split proportionally by unit count.
+      Direct expenses are attributed to specific properties via memo parsing.
+    columns:
+      - name: transaction_id
+        description: Source transaction identifier (may repeat for allocated shared expenses)
+      - name: property_id
+        description: Foreign key to properties
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_properties')
+                field: property_id
+      - name: llc_name
+        description: Owning LLC for the property
+      - name: allocation_method
+        description: How this transaction was attributed (direct vs allocated)
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['direct', 'allocated']
+      - name: line_type
+        description: Whether this is income or expense for P&L purposes
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['income', 'expense']
+
+  - name: int_portfolio_enriched
+    description: >
+      Portfolio holdings enriched with account context, portfolio weights,
+      and concentration flags. Flags positions exceeding 10% or 20% thresholds.
+    columns:
+      - name: holding_id
+        description: Unique holding identifier
+        data_tests:
+          - unique
+          - not_null
+      - name: portfolio_weight_pct
+        description: This holding as a percentage of total portfolio value
+        data_tests:
+          - not_null
+      - name: concentration_level
+        description: Risk flag based on portfolio weight thresholds
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['normal', 'moderate', 'high']
