@@ -85,3 +85,23 @@ models:
           - accepted_values:
               arguments:
                 values: ['normal', 'moderate', 'high']
+
+  - name: int_transaction_ledger
+    description: >
+      Incremental transaction ledger that only processes new rows on each run.
+      Uses transaction_date as the watermark for identifying new data.
+    columns:
+        - name: transaction_id
+          description: Unique transaction identifier (merge key)
+          data_tests:
+            - unique
+            - not_null
+        - name: loaded_at
+          description: Timestamp when this row was loaded into the ledger
+          data_tests:
+            - not_null
+        - name: amount
+          description: Transaction amount
+          data_tests:
+            - not_null
+            - dbt_utils.not_constant
